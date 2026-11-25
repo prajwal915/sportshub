@@ -1,0 +1,75 @@
+<?php require_once 'config.php'; ?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sports Hub - Home</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo"><a href="index.php">SPORTS HUB</a></div>
+            <ul class="nav-links">
+                <li><a href="index.php" class="active">Home</a></li>
+                <li><a href="shop.php">Shop</a></li>
+                <li><a href="cart.php">Cart</a></li>
+                <?php if(isLoggedIn()): ?>
+                    <li><a href="dashboard.php">Account</a></li>
+                    <li><a href="logout.php">Logout</a></li>
+                <?php else: ?>
+                    <li><a href="login.php">Login</a></li>
+                <?php endif; ?>
+            </ul>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Gear Up for <span class="highlight">Victory</span></h1>
+            <p>Premium sports merchandise from the world's best brands. Shop now!</p>
+            <a href="shop.php" class="btn-primary">Shop Now</a>
+        </div>
+    </section>
+
+    <section class="products-section">
+        <div class="container">
+            <h2 class="section-title">Featured <span class="highlight">Products</span></h2>
+            <div class="products-grid">
+                <?php
+                $stmt = $pdo->query("SELECT * FROM products LIMIT 8");
+                $products = $stmt->fetchAll();
+                foreach($products as $product):
+                    $imageUrl = "https://source.unsplash.com/400x400/?" . urlencode($product['category'] . '+sports');
+                ?>
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="<?php echo $imageUrl; ?>" alt="<?php echo $product['name']; ?>" onerror="this.src='https://picsum.photos/id/20/400/400'">
+                    </div>
+                    <div class="product-info">
+                        <h3><?php echo htmlspecialchars($product['name']); ?></h3>
+                        <p class="price">₹<?php echo number_format($product['price'], 0); ?></p>
+                        <form action="add_to_cart.php" method="POST">
+                            <input type="hidden" name="product_id" value="<?php echo $product['id']; ?>">
+                            <button type="submit" class="add-to-cart">Add to Cart</button>
+                        </form>
+                    </div>
+                </div>
+                <?php endforeach; ?>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section"><h3>SPORTS HUB</h3><p>Your ultimate sports destination</p></div>
+                <div class="footer-section"><h4>Quick Links</h4><ul><li><a href="index.php">Home</a></li><li><a href="shop.php">Shop</a></li></ul></div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

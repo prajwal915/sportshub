@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Sports Hub</title>
+    <link rel="stylesheet" href="admin.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <nav class="admin-nav">
+        <h2><i class="fas fa-crown"></i> SPORTS HUB ADMIN</h2>
+        <div class="admin-nav-links">
+            <a href="index.html"><i class="fas fa-home"></i> Home</a>
+            <a href="logout.php"><i class="fas fa-sign-out-alt"></i> Logout</a>
+        </div>
+    </nav>
+
+    <div class="admin-container">
+        <!-- Stats Cards -->
+        <div class="admin-stats" id="adminStats">
+            <div class="stat-card" onclick="showProducts()">
+                <i class="fas fa-box"></i>
+                <h3 id="totalProducts">0</h3>
+                <p>Total Products</p>
+                <span class="stat-link">Manage →</span>
+            </div>
+            <div class="stat-card" onclick="showOrders()">
+                <i class="fas fa-shopping-cart"></i>
+                <h3 id="totalOrders">0</h3>
+                <p>Total Orders</p>
+                <span class="stat-link">View →</span>
+            </div>
+            <div class="stat-card" onclick="showUsers()">
+                <i class="fas fa-users"></i>
+                <h3 id="totalUsers">0</h3>
+                <p>Total Users</p>
+                <span class="stat-link">Manage →</span>
+            </div>
+            <div class="stat-card">
+                <i class="fas fa-rupee-sign"></i>
+                <h3 id="totalRevenue">₹0</h3>
+                <p>Total Revenue</p>
+            </div>
+        </div>
+
+        <!-- Products Panel -->
+        <div id="productsPanel" class="admin-panel">
+            <div class="panel-header">
+                <h2><i class="fas fa-box"></i> Products Management</h2>
+                <button class="btn-primary" onclick="openProductModal()"><i class="fas fa-plus"></i> Add Product</button>
+            </div>
+            <div class="table-container">
+                <table class="admin-table">
+                    <thead>
+                        <tr><th>ID</th><th>Image</th><th>Name</th><th>Category</th><th>Price</th><th>Stock</th><th>Actions</th></tr>
+                    </thead>
+                    <tbody id="productsTableBody">
+                        <tr><td colspan="7" style="text-align:center;">Loading products...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Orders Panel -->
+        <div id="ordersPanel" class="admin-panel" style="display: none;">
+            <div class="panel-header">
+                <h2><i class="fas fa-shopping-cart"></i> Orders Management</h2>
+            </div>
+            <div class="table-container">
+                <table class="admin-table">
+                    <thead>
+                        <tr><th>Order #</th><th>Customer</th><th>Amount</th><th>Status</th><th>Date</th><th>Actions</th></tr>
+                    </thead>
+                    <tbody id="ordersTableBody">
+                        <tr><td colspan="6" style="text-align:center;">Loading orders...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Users Panel -->
+        <div id="usersPanel" class="admin-panel" style="display: none;">
+            <div class="panel-header">
+                <h2><i class="fas fa-users"></i> Users Management</h2>
+            </div>
+            <div class="table-container">
+                <table class="admin-table">
+                    <thead>
+                        <tr><th>ID</th><th>Name</th><th>Email</th><th>Role</th><th>Joined</th><th>Actions</th></tr>
+                    </thead>
+                    <tbody id="usersTableBody">
+                        <tr><td colspan="6" style="text-align:center;">Loading users...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Product Modal -->
+    <div id="productModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeProductModal()">&times;</span>
+            <h2 id="modalTitle">Add Product</h2>
+            <form id="productForm">
+                <input type="hidden" id="productId">
+                <div class="form-group">
+                    <label>Product Name</label>
+                    <input type="text" id="productName" required>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Category</label>
+                        <select id="productCategory" required>
+                            <option value="football">Football</option>
+                            <option value="cricket">Cricket</option>
+                            <option value="basketball">Basketball</option>
+                            <option value="tennis">Tennis</option>
+                            <option value="accessories">Accessories</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Brand</label>
+                        <input type="text" id="productBrand" placeholder="Brand name">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Price (₹)</label>
+                        <input type="number" id="productPrice" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Stock</label>
+                        <input type="number" id="productStock" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Image Filename</label>
+                    <input type="text" id="productImage" placeholder="e.g., jersey.jpg" required>
+                    <small>Place image in images/ folder</small>
+                </div>
+                <button type="submit" class="btn-primary">Save Product</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="admin.js"></script>
+</body>
+</html>
